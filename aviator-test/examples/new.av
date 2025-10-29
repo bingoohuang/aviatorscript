@@ -1,0 +1,14 @@
+## examples/new.av
+
+use java.util.Date;
+
+let d = new Date();
+
+p(type(d));
+p(d);
+
+let year = getYear(d);
+let month = getMonth(d);
+
+p("Year is: #{year}");
+p("Month is: #{month}");

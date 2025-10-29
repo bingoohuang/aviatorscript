@@ -1,0 +1,9 @@
+## examples/string.av
+
+let a = "hello world";
+let b = 'AviatorScript';
+
+println(a);
+println(string.length(a));
+println(count(a));
+println(a + ',' + b + 5);

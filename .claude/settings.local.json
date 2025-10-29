@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(mv:*)",
+      "Bash(rmdir:*)",
+      "Bash(tree:*)",
+      "Bash(mvn clean test:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
