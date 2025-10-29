@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.googlecode.aviator</groupId>
+    <artifactId>aviator-parent</artifactId>
+    <version>5.4.3</version>
+  </parent>
+
+  <artifactId>expr-eval</artifactId>
+  <name>expr-eval</name>
+  <description>Expression Evaluation Module</description>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.googlecode.aviator</groupId>
+      <artifactId>aviator-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+    </dependency>
+
+            <!-- EvalEx 2.7 - supports older Java versions -->
+            <dependency>
+              <groupId>com.udojava</groupId>
+              <artifactId>EvalEx</artifactId>
+              <version>2.7</version>
+          </dependency>
+
+          <!-- JEP 2.4.1 - Java Expression Parser -->
+          <dependency>
+              <groupId>org.scijava</groupId>
+              <artifactId>jep</artifactId>
+              <version>2.4.1</version>
+              <exclusions>
+                  <exclusion>
+                      <groupId>jama</groupId>
+                      <artifactId>jama</artifactId>
+                  </exclusion>
+              </exclusions>
+          </dependency>
+
+          <!-- Apache Commons JEXL 2.1.1 - Java 1.5+ compatible -->
+          <dependency>
+              <groupId>org.apache.commons</groupId>
+              <artifactId>commons-jexl</artifactId>
+              <version>2.1.1</version>
+          </dependency>
+
+          <!-- MVEL 2.0.19 - Java 1.6 compatible -->
+          <dependency>
+              <groupId>org.mvel</groupId>
+              <artifactId>mvel2</artifactId>
+              <version>2.0.19</version>
+          </dependency>
+
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-source-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.6</source>
+          <target>1.6</target>
+          <encoding>UTF-8</encoding>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
