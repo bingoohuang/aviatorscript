@@ -26,4 +26,8 @@ public class PopNIR implements IR {
     return "pop " + this.times;
   }
 
+  @Override
+  public boolean mayBeCost() {
+    return false;
+  }
 }

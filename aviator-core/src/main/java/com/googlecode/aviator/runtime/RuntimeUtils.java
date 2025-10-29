@@ -99,7 +99,7 @@ public final class RuntimeUtils {
       int maxLoopCount =
           RuntimeUtils.getInstance(env).getOptionValue(Options.MAX_LOOP_COUNT).number;
       if (maxLoopCount > 0) {
-        return new LimitedSequence<>(seq, maxLoopCount);
+        return new LimitedSequence<AviatorObject>(seq, maxLoopCount);
       }
     }
 

@@ -13,10 +13,8 @@ public interface IR extends Serializable {
 
   /**
    * Returns true when the IR execution cost may be expensive
-   * 
+   *
    * @return
    */
-  default boolean mayBeCost() {
-    return false;
-  }
+  boolean mayBeCost();
 }

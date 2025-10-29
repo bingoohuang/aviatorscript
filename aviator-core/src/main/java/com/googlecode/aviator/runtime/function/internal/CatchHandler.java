@@ -26,7 +26,7 @@ public class CatchHandler extends AviatorObject {
       final List<String> exceptionClassNames) {
     super();
     this.func = func;
-    this.exceptionClasses = new ArrayList<>(exceptionClassNames.size());
+    this.exceptionClasses = new ArrayList<Class<?>>(exceptionClassNames.size());
     for (String exceptionClass : exceptionClassNames) {
       try {
         this.exceptionClasses.add(env.resolveClassSymbol(exceptionClass, false));

@@ -95,7 +95,7 @@ public class ExpressionLexer {
    */
   public void pushback(final Token<?> token) {
     if (this.tokenBuffer == null) {
-      this.tokenBuffer = new LinkedList<>();
+      this.tokenBuffer = new LinkedList<Token<?>>();
     }
     this.tokenBuffer.push(token);
   }

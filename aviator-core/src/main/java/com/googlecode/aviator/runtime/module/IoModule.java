@@ -140,9 +140,19 @@ public class IoModule {
 
   public static String slurp(final File file, final String charset) throws IOException {
     byte[] data = new byte[(int) file.length()];
-    try (InputStream in = inputStream(file)) {
+    InputStream in = null;
+    try {
+      in = inputStream(file);
       int read = in.read(data);
       assert (read == data.length);
+    } finally {
+      if (in != null) {
+        try {
+          in.close();
+        } catch (IOException e) {
+          // ignore
+        }
+      }
     }
     return new String(data, charset);
   }
@@ -161,7 +171,9 @@ public class IoModule {
     byte[] data = new byte[BUFFER_SIZE];
     byte[] buffer = new byte[INIT_BUFFER_SIZE];
     int destPos = 0;
-    try (InputStream in = inputStream(file)) {
+    InputStream in = null;
+    try {
+      in = inputStream(file);
       int read = 0;
       while ((read = in.read(data)) == data.length) {
         while (destPos + read > buffer.length) {
@@ -176,6 +188,14 @@ public class IoModule {
         }
         System.arraycopy(data, 0, buffer, destPos, read);
         destPos += data.length;
+      }
+    } finally {
+      if (in != null) {
+        try {
+          in.close();
+        } catch (IOException e) {
+          // ignore
+        }
       }
     }
     return new String(data, 0, destPos, charset);
@@ -204,8 +224,18 @@ public class IoModule {
   public static void spit(final File file, final String content, final String charset)
       throws IOException {
     byte[] data = content.getBytes(Charset.forName(charset));
-    try (OutputStream out = outputStream(file)) {
+    OutputStream out = null;
+    try {
+      out = outputStream(file);
       out.write(data);
+    } finally {
+      if (out != null) {
+        try {
+          out.close();
+        } catch (IOException e) {
+          // ignore
+        }
+      }
     }
   }
 

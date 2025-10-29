@@ -42,7 +42,7 @@ public class LambdaGenerator implements CodeGenerator {
       final CodeGenerator parentCodeGenerator, final Parser parser,
       final AviatorClassLoader classLoader, final String sourceFile, final boolean newLexicalScope,
       final boolean inheritEnv) {
-    this.params = new ArrayList<>();
+    this.params = new ArrayList<FunctionParam>();
     // this.instance = instance;
     this.parentCodeGenerator = parentCodeGenerator;
     this.codeGenerator = instance.newCodeGenerator(classLoader, sourceFile);

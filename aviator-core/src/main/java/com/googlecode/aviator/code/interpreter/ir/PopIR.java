@@ -20,4 +20,8 @@ public class PopIR implements IR {
     return "pop";
   }
 
+  @Override
+  public boolean mayBeCost() {
+    return false;
+  }
 }

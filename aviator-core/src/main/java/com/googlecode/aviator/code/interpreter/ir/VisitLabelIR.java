@@ -25,4 +25,9 @@ public class VisitLabelIR implements IR {
   public String toString() {
     return this.label + ":";
   }
+
+  @Override
+  public boolean mayBeCost() {
+    return false;
+  }
 }

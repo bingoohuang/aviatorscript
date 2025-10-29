@@ -18,7 +18,7 @@ import com.googlecode.aviator.utils.Env;
  *
  */
 public class InterpretContext {
-  private final ArrayDeque<AviatorObject> operands = new ArrayDeque<>();
+  private final ArrayDeque<AviatorObject> operands = new ArrayDeque<AviatorObject>();
   private IR pc;
   private int pcIndex = -1;
   private IR[] instruments = new IR[0];

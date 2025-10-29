@@ -72,7 +72,8 @@ public class ClassDefiner {
       throws NoSuchFieldException, IllegalAccessException {
     if (!preferClassLoader && !forceClassLoader && DEFINE_CLASS_HANDLE != null) {
       try {
-        Class<?> defineClass = (Class<?>) DEFINE_CLASS_HANDLE.invokeExact(clazz, bytes, EMPTY_OBJS);
+        Class<?> defineClass =
+            (Class<?>) DEFINE_CLASS_HANDLE.invokeWithArguments(clazz, bytes, EMPTY_OBJS);
         return defineClass;
       } catch (Throwable e) {
         // fallback to class loader mode.

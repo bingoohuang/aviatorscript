@@ -259,9 +259,9 @@ public enum Options {
       case USE_USER_ENV_AS_TOP_ENV_DIRECTLY:
       case CAPTURE_FUNCTION_ARGS:
       case SERIALIZABLE:
-        return ((boolean) val) ? TRUE_VALUE : FALSE_VALUE;
+        return (((Boolean) val).booleanValue()) ? TRUE_VALUE : FALSE_VALUE;
       case OPTIMIZE_LEVEL: {
-        int level = (int) val;
+        int level = ((Integer) val).intValue();
         if (level == AviatorEvaluator.EVAL) {
           return EVAL_VALUE;
         } else {

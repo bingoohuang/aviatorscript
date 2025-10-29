@@ -41,9 +41,9 @@ public class ComparatorFunction extends AbstractFunction {
         AviatorObject x = AviatorRuntimeJavaType.valueOf(o1);
         AviatorObject y = AviatorRuntimeJavaType.valueOf(o2);
 
-        if ((boolean) func.call(env, x, y).getValue(env)) {
+        if (((Boolean) func.call(env, x, y).getValue(env)).booleanValue()) {
           return -1;
-        } else if ((boolean) func.call(env, y, x).getValue(env)) {
+        } else if (((Boolean) func.call(env, y, x).getValue(env)).booleanValue()) {
           return 1;
         } else {
           return 0;

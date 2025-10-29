@@ -27,4 +27,9 @@ public class NewLambdaIR implements IR {
   public String toString() {
     return "new_lambda " + this.lambdaName;
   }
+
+  @Override
+  public boolean mayBeCost() {
+    return false;
+  }
 }

@@ -124,7 +124,7 @@ public enum Feature {
   }
 
   private static List<AviatorFunction> asList(final AviatorFunction... args) {
-    List<AviatorFunction> ret = new ArrayList<>(args.length);
+    List<AviatorFunction> ret = new ArrayList<AviatorFunction>(args.length);
     for (AviatorFunction f : args) {
       ret.add(f);
     }
@@ -155,7 +155,7 @@ public enum Feature {
    * @return feature set
    */
   public static Set<Feature> asSet(final Feature... args) {
-    Set<Feature> set = new IdentityHashSet<>();
+    Set<Feature> set = new IdentityHashSet<Feature>();
     for (Feature f : args) {
       set.addAll(f.prequires);
       set.add(f);

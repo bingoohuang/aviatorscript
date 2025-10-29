@@ -32,7 +32,8 @@ public class LambdaFunctionBootstrap implements Comparable<LambdaFunctionBootstr
   private final List<FunctionParam> params;
   private final boolean inheritEnv;
 
-  private transient ThreadLocal<Reference<LambdaFunction>> fnLocal = new ThreadLocal<>();
+  private transient ThreadLocal<Reference<LambdaFunction>> fnLocal =
+      new ThreadLocal<Reference<LambdaFunction>>();
 
 
   @Override
@@ -104,7 +105,7 @@ public class LambdaFunctionBootstrap implements Comparable<LambdaFunctionBootstr
     LambdaFunction fn = new LambdaFunction(this.name, this.params, this.expression, env);
     fn.setInheritEnv(this.inheritEnv);
     if (this.inheritEnv) {
-      this.fnLocal.set(new SoftReference<>(fn));
+      this.fnLocal.set(new SoftReference<LambdaFunction>(fn));
     }
     return fn;
   }

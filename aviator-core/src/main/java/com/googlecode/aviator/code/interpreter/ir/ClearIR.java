@@ -22,4 +22,8 @@ public class ClearIR implements IR {
     return "clear";
   }
 
+  @Override
+  public boolean mayBeCost() {
+    return false;
+  }
 }

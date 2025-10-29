@@ -19,9 +19,11 @@ public class DispatchFunction extends AbstractVariadicFunction {
 
   private static final long serialVersionUID = 5993768652338524385L;
 
-  private final IdentityHashMap<Integer, LambdaFunction> functions = new IdentityHashMap<>();
+  private final IdentityHashMap<Integer, LambdaFunction> functions =
+      new IdentityHashMap<Integer, LambdaFunction>();
 
-  private final TreeMap<Integer, LambdaFunction> variadicFunctions = new TreeMap<>();
+  private final TreeMap<Integer, LambdaFunction> variadicFunctions =
+      new TreeMap<Integer, LambdaFunction>();
 
   private final String name;
 

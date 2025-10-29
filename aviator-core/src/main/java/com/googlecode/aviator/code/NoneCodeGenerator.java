@@ -16,7 +16,7 @@ import com.googlecode.aviator.utils.Constants;
  */
 public class NoneCodeGenerator implements CodeGenerator {
 
-  private final Stack<ScopeInfo> infos = new Stack<>();
+  private final Stack<ScopeInfo> infos = new Stack<ScopeInfo>();
   private Parser parser;
 
   @Override

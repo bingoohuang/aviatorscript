@@ -58,7 +58,7 @@ public class ExpressionParser implements Parser {
    */
   private Token<?> lookhead;
 
-  private final ArrayDeque<Token<?>> prevTokens = new ArrayDeque<>();
+  private final ArrayDeque<Token<?>> prevTokens = new ArrayDeque<Token<?>>();
 
   private CodeGenerator codeGenerator;
 
@@ -772,7 +772,7 @@ public class ExpressionParser implements Parser {
     move(true);
     int paramIndex = 0;
     FunctionParam lastParam = null;
-    List<FunctionParam> variadicParams = new ArrayList<>(2);
+    List<FunctionParam> variadicParams = new ArrayList<FunctionParam>(2);
     if (!expectChar(')')) {
       lastParam = lambdaArgument(paramIndex++);
       if (lastParam.isVariadic()) {
@@ -942,7 +942,7 @@ public class ExpressionParser implements Parser {
       List<FunctionArgument> params = null;
       boolean unpackArguments = false;
       if (this.captureFuncArgs) {
-        params = new ArrayList<>();
+        params = new ArrayList<FunctionArgument>();
       }
       int lastTokenIndex = getLookheadStartIndex();
       if (!expectChar(')')) {
@@ -1089,7 +1089,7 @@ public class ExpressionParser implements Parser {
 
     ExpressionSyntaxErrorException e = new ExpressionSyntaxErrorException(msg);
     StackTraceElement[] traces = e.getStackTrace();
-    List<StackTraceElement> filteredTraces = new ArrayList<>();
+    List<StackTraceElement> filteredTraces = new ArrayList<StackTraceElement>();
     for (StackTraceElement t : traces) {
       if (!this.instance.getOptionValue(Options.TRACE_EVAL).bool
           && t.getClassName().equals(this.getClass().getName())) {
@@ -1429,7 +1429,7 @@ public class ExpressionParser implements Parser {
         reportSyntaxError("invalid exception class name");
       }
       checkVariableName(this.lookhead);
-      List<Token<?>> exceptionClasses = new ArrayList<>();
+      List<Token<?>> exceptionClasses = new ArrayList<Token<?>>();
       exceptionClasses.add(this.lookhead);
       move(true);
 
@@ -1741,7 +1741,7 @@ public class ExpressionParser implements Parser {
       return (new NumberToken((Number) val, val.toString(), this.lexer.getLineNo(),
           this.lookhead.getStartIndex()));
     } else if (val instanceof Boolean) {
-      return (((boolean) val) ? Variable.TRUE : Variable.FALSE);
+      return ((((Boolean) val).booleanValue()) ? Variable.TRUE : Variable.FALSE);
     } else {
       throw new ExpressionRuntimeException(
           "Unsupported compiled-time metadata type: " + val.getClass());
@@ -1770,7 +1770,7 @@ public class ExpressionParser implements Parser {
   private void forStatement() {
     move(true);
 
-    List<Token<?>> reducerArgs = new ArrayList<>(2);
+    List<Token<?>> reducerArgs = new ArrayList<Token<?>>(2);
 
     while (true) {
       if (reducerArgs.size() > 2) {

@@ -35,11 +35,11 @@ public class AviatorRuntimeJavaElementType extends AviatorRuntimeJavaType {
     Object val = value.getValue(env);
     switch (this.containerType) {
       case Array:
-        ArrayUtils.set(this.container, (int) this.index,
+        ArrayUtils.set(this.container, ((Number) this.index).intValue(),
             Reflector.boxArg(this.container.getClass().getComponentType(), val));
         break;
       case List:
-        ((List) this.container).set((int) this.index, val);
+        ((List) this.container).set(((Number) this.index).intValue(), val);
         break;
       case Map:
         ((Map) this.container).put(this.index, val);

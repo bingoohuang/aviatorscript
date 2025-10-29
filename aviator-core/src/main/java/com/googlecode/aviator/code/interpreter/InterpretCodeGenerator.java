@@ -53,14 +53,14 @@ import com.googlecode.aviator.utils.IdentityHashSet;
  *
  */
 public class InterpretCodeGenerator extends BaseEvalCodeGenerator {
-  private final List<IR> instruments = new ArrayList<>();
+  private final List<IR> instruments = new ArrayList<IR>();
   private Set<Token<?>> constantPool = Collections.emptySet();
 
   private int labelNum;
 
-  private final Stack<Label> labels0 = new Stack<>();
+  private final Stack<Label> labels0 = new Stack<Label>();
 
-  private final Stack<Label> labels1 = new Stack<>();
+  private final Stack<Label> labels1 = new Stack<Label>();
 
   private Label currLabel;
 
@@ -392,7 +392,7 @@ public class InterpretCodeGenerator extends BaseEvalCodeGenerator {
     }
   }
 
-  private static Set<TokenType> LOAD_CONSTANTS_TYPE = new IdentityHashSet<>();
+  private static Set<TokenType> LOAD_CONSTANTS_TYPE = new IdentityHashSet<TokenType>();
   {
     LOAD_CONSTANTS_TYPE.add(TokenType.Number);
     LOAD_CONSTANTS_TYPE.add(TokenType.String);

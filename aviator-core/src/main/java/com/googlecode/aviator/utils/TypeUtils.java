@@ -99,7 +99,7 @@ public class TypeUtils {
     return ret;
   }
 
-  public static final Map<String, Class<?>> PRIMITIVE_TYPES = new HashMap<>();
+  public static final Map<String, Class<?>> PRIMITIVE_TYPES = new HashMap<String, Class<?>>();
 
 
   static {

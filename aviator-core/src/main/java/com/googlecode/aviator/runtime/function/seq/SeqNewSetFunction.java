@@ -26,7 +26,7 @@ public class SeqNewSetFunction extends AbstractVariadicFunction {
 
   @Override
   public AviatorObject variadicCall(final Map<String, Object> env, final AviatorObject... args) {
-    Set<Object> set = new HashSet<>(args != null ? args.length : 10);
+    Set<Object> set = new HashSet<Object>(args != null ? args.length : 10);
 
     if (args != null) {
       for (AviatorObject obj : args) {

@@ -250,7 +250,7 @@ public abstract class AviatorObject implements Serializable {
     if (!(val instanceof Boolean)) {
       throw new ExpressionRuntimeException(desc(env) + " is not a boolean value");
     }
-    return (boolean) val;
+    return ((Boolean) val).booleanValue();
   }
 
   public AviatorObject deref(final Map<String, Object> env) {

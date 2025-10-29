@@ -39,4 +39,8 @@ public class AssertTypeIR implements IR {
     return "assert " + this.type.name().toLowerCase();
   }
 
+  @Override
+  public boolean mayBeCost() {
+    return false;
+  }
 }

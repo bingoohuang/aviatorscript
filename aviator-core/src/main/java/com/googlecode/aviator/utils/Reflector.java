@@ -188,11 +188,11 @@ public class Reflector {
       new ConcurrentHashMap<Class<?>, Reference<Map<String, PropertyFoundResult>>>();
 
   private static final ReferenceQueue<Map<String, PropertyFoundResult>> cachedSetterRq =
-      new ReferenceQueue<>();
+      new ReferenceQueue<Map<String, PropertyFoundResult>>();
 
 
   private static final ReferenceQueue<Map<String, PropertyFoundResult>> cachePropertyRq =
-      new ReferenceQueue<>();
+      new ReferenceQueue<Map<String, PropertyFoundResult>>();
 
   /**
    * static method caching
@@ -201,7 +201,7 @@ public class Reflector {
       new ConcurrentHashMap<Class<?>, Reference<Map<String, PropertyFoundResult>>>();
 
   private static final ReferenceQueue<Map<String, PropertyFoundResult>> cacheMethodRq =
-      new ReferenceQueue<>();
+      new ReferenceQueue<Map<String, PropertyFoundResult>>();
 
   private static String genGetterName(final String prefix, final String name) {
     StringBuilder sb = new StringBuilder(prefix);
@@ -249,8 +249,8 @@ public class Reflector {
       }
 
       if (result.handle != null) {
-        Object ret =
-            type == PropertyType.StaticField ? result.handle.invoke() : result.handle.invoke(obj);
+        Object ret = type == PropertyType.StaticField ? result.handle.invokeWithArguments()
+            : result.handle.invokeWithArguments(obj);
         if (result.isBooleanType && !(ret instanceof Boolean)) {
           putDummyHandle(name, results);
           return throwNoSuchPropertyException(
@@ -510,8 +510,8 @@ public class Reflector {
   }
 
   static ConcurrentHashMap<MethodKey, Reference<List<Method>>> instanceMethodsCache =
-      new ConcurrentHashMap<>();
-  static final ReferenceQueue<List<Method>> instanceMethodsRq = new ReferenceQueue<>();
+      new ConcurrentHashMap<MethodKey, Reference<List<Method>>>();
+  static final ReferenceQueue<List<Method>> instanceMethodsRq = new ReferenceQueue<List<Method>>();
 
 
   public static List<Method> getInstanceMethods(final Class<?> clazz, final String methodName) {
@@ -629,7 +629,7 @@ public class Reflector {
 
 
   private static Set<Class<?>> asSet(final Class<?>... classes) {
-    Set<Class<?>> ret = new HashSet<>();
+    Set<Class<?>> ret = new HashSet<Class<?>>();
     for (Class<?> clazz : classes) {
       ret.add(clazz);
     }
@@ -748,7 +748,8 @@ public class Reflector {
         }
 
         if (result.handle != null) {
-          result.handle.invoke(target, boxArg(result.handle.type().parameterType(1), val));
+          result.handle.invokeWithArguments(target,
+              boxArg(result.handle.type().parameterType(1), val));
         } else {
           throw new NoSuchPropertyException(
               "Setter not found for property `" + name + "` in class: " + clazz);
@@ -880,7 +881,7 @@ public class Reflector {
 
   public static Map<String, List<Method>> findMethodsFromClass(final Class<?> clazz,
       final boolean isStatic) {
-    Map<String, List<Method>> methodMap = new HashMap<>();
+    Map<String, List<Method>> methodMap = new HashMap<String, List<Method>>();
 
     for (Method method : clazz.getMethods()) {
       int modifiers = method.getModifiers();
@@ -914,7 +915,7 @@ public class Reflector {
 
         List<Method> methods = methodMap.get(methodName);
         if (methods == null) {
-          methods = new ArrayList<>(3);
+          methods = new ArrayList<Method>(3);
           methodMap.put(methodName, methods);
         }
         methods.add(method);

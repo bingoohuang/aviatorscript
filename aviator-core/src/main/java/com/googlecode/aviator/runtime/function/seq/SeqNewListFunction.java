@@ -26,7 +26,7 @@ public class SeqNewListFunction extends AbstractVariadicFunction {
 
   @Override
   public AviatorObject variadicCall(final Map<String, Object> env, final AviatorObject... args) {
-    List<Object> list = new ArrayList<>(args != null ? args.length : 10);
+    List<Object> list = new ArrayList<Object>(args != null ? args.length : 10);
     if (args != null) {
       for (AviatorObject obj : args) {
         list.add(obj.getValue(env));

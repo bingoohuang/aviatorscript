@@ -54,7 +54,7 @@ public class ReducerFunction extends AbstractFunction {
     long c = 0;
 
     if (coll != Range.LOOP) {
-      long arities = (long) arg2.meta(Constants.ARITIES_META);
+      long arities = ((Number) arg2.meta(Constants.ARITIES_META)).longValue();
       long index = 0;
       boolean unboxEntry =
           arities == 2 && coll != null && Map.class.isAssignableFrom(coll.getClass());

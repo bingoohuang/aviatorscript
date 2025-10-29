@@ -218,7 +218,8 @@ public final class AviatorEvaluatorInstance {
   /**
    * alias operator token
    */
-  private final Map<OperatorType, String> aliasOperatorTokens = new IdentityHashMap<>();
+  private final Map<OperatorType, String> aliasOperatorTokens =
+      new IdentityHashMap<OperatorType, String>();
 
   /**
    * Set a alias token for the operator, only supports AND and OR operator right now. <strong> It's
@@ -332,10 +333,27 @@ public final class AviatorEvaluatorInstance {
    */
   public Expression compileScript(final String cacheKey, final File file, final boolean cached)
       throws IOException {
-    try (InputStream in = new FileInputStream(file);
-        Reader reader = new InputStreamReader(in, Charset.forName("utf-8"));) {
-
+    InputStream in = null;
+    Reader reader = null;
+    try {
+      in = new FileInputStream(file);
+      reader = new InputStreamReader(in, Charset.forName("utf-8"));
       return compile(cacheKey, Utils.readFully(reader), file.getName(), cached);
+    } finally {
+      if (reader != null) {
+        try {
+          reader.close();
+        } catch (IOException e) {
+          // ignore
+        }
+      }
+      if (in != null) {
+        try {
+          in.close();
+        } catch (IOException e) {
+          // ignore
+        }
+      }
     }
   }
 
@@ -597,7 +615,7 @@ public final class AviatorEvaluatorInstance {
   private List<String> addMethodFunctions(final String namespace, final boolean isStatic,
       final Class<?> clazz) throws IllegalAccessException, NoSuchMethodException {
     Map<String, List<Method>> methodMap = Reflector.findMethodsFromClass(clazz, isStatic);
-    List<String> added = new ArrayList<>();
+    List<String> added = new ArrayList<String>();
 
     for (Map.Entry<String, List<Method>> entry : methodMap.entrySet()) {
       String methodName = entry.getKey();
@@ -659,7 +677,7 @@ public final class AviatorEvaluatorInstance {
       }
     }
 
-    List<String> result = new ArrayList<>();
+    List<String> result = new ArrayList<String>();
     for (ImportScope scope : scopes) {
       switch (scope) {
         case Static:
@@ -703,10 +721,10 @@ public final class AviatorEvaluatorInstance {
     if (!opt.isValidValue(val)) {
       throw new IllegalArgumentException("Invalid value for option:" + opt.name());
     }
-    Map<Options, Value> newOpts = new IdentityHashMap<>(this.options);
+    Map<Options, Value> newOpts = new IdentityHashMap<Options, Value>(this.options);
     newOpts.put(opt, opt.intoValue(val));
     if (opt == Options.FEATURE_SET) {
-      Set<Feature> oldSet = new HashSet<>(getFeatures());
+      Set<Feature> oldSet = new HashSet<Feature>(getFeatures());
       @SuppressWarnings("unchecked")
       Set<Feature> newSet = (Set<Feature>) val;
       if (oldSet.removeAll(newSet)) {
@@ -732,7 +750,8 @@ public final class AviatorEvaluatorInstance {
    * @param feature
    */
   public void enableFeature(final Feature feature) {
-    Set<Feature> featureSet = new HashSet<>(this.options.get(Options.FEATURE_SET).featureSet);
+    Set<Feature> featureSet =
+        new HashSet<Feature>(this.options.get(Options.FEATURE_SET).featureSet);
     featureSet.add(feature);
     featureSet.addAll(feature.getPrequires());
     setOption(Options.FEATURE_SET, featureSet);
@@ -766,7 +785,8 @@ public final class AviatorEvaluatorInstance {
    * @param feature
    */
   public void disableFeature(final Feature feature) {
-    Set<Feature> featureSet = new HashSet<>(this.options.get(Options.FEATURE_SET).featureSet);
+    Set<Feature> featureSet =
+        new HashSet<Feature>(this.options.get(Options.FEATURE_SET).featureSet);
     featureSet.remove(feature);
     for (AviatorFunction fn : feature.getFunctions()) {
       this.removeFunction(fn);
@@ -829,7 +849,7 @@ public final class AviatorEvaluatorInstance {
    * @return
    */
   public Map<Options, Object> getOptions() {
-    Map<Options, Object> ret = new HashMap<>();
+    Map<Options, Object> ret = new HashMap<Options, Object>();
     for (Map.Entry<Options, Value> entry : this.options.entrySet()) {
       ret.put(entry.getKey(), entry.getKey().intoObject(entry.getValue()));
     }
@@ -886,7 +906,7 @@ public final class AviatorEvaluatorInstance {
   private final Map<String, Object> funcMap = new HashMap<String, Object>();
 
   private final ConcurrentHashMap<String/* namespace */, Object /* exports */> moduleCache =
-      new ConcurrentHashMap<>();
+      new ConcurrentHashMap<String, Object>();
 
   private final Map<OperatorType, AviatorFunction> opsMap =
       new IdentityHashMap<OperatorType, AviatorFunction>();
@@ -1077,11 +1097,15 @@ public final class AviatorEvaluatorInstance {
   }
 
   private Map<String, AviatorFunction> loadInternalFunctions() {
-    Map<String, AviatorFunction> funcs = new HashMap<>();
+    Map<String, AviatorFunction> funcs = new HashMap<String, AviatorFunction>();
     for (String lib : libs) {
-      try (final InputStream in = this.getClass().getResourceAsStream("/" + lib);
-          final BufferedInputStream bis = new BufferedInputStream(in);
-          final Reader reader = new InputStreamReader(bis)) {
+      InputStream in = null;
+      BufferedInputStream bis = null;
+      Reader reader = null;
+      try {
+        in = this.getClass().getResourceAsStream("/" + lib);
+        bis = new BufferedInputStream(in);
+        reader = new InputStreamReader(bis);
         Expression exp = this.compile(lib, Utils.readFully(reader), false);
         Map<String, Object> exports = executeModule(exp, lib);
         for (Map.Entry<String, Object> entry : exports.entrySet()) {
@@ -1093,6 +1117,28 @@ public final class AviatorEvaluatorInstance {
         }
       } catch (IOException e) {
         throw new IllegalStateException("Fail to load internal lib: " + lib, e);
+      } finally {
+        if (reader != null) {
+          try {
+            reader.close();
+          } catch (IOException e) {
+            // ignore
+          }
+        }
+        if (bis != null) {
+          try {
+            bis.close();
+          } catch (IOException e) {
+            // ignore
+          }
+        }
+        if (in != null) {
+          try {
+            in.close();
+          } catch (IOException e) {
+            // ignore
+          }
+        }
       }
     }
     return funcs;
@@ -1180,7 +1226,7 @@ public final class AviatorEvaluatorInstance {
    * @return the evaluator instance itself.
    */
   public AviatorEvaluatorInstance useLRUExpressionCache(final int capacity) {
-    this.expressionLRUCache = new LRUMap<>(capacity);
+    this.expressionLRUCache = new LRUMap<String, FutureTask<Expression>>(capacity);
     return this;
   }
 
@@ -1519,7 +1565,7 @@ public final class AviatorEvaluatorInstance {
 
   private FutureTask<Expression> newCompileTask(final String expression, final String sourceFile,
       final boolean cached) {
-    return new FutureTask<>(new Callable<Expression>() {
+    return new FutureTask<Expression>(new Callable<Expression>() {
       @Override
       public Expression call() throws Exception {
         return innerCompile(expression, sourceFile, cached);

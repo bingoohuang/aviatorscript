@@ -72,7 +72,7 @@ public class FunctionUtils {
    */
   public static final boolean getBooleanValue(final AviatorObject arg,
       final Map<String, Object> env) {
-    return (boolean) arg.getValue(env);
+    return ((Boolean) arg.getValue(env)).booleanValue();
   }
 
   /**
@@ -192,7 +192,7 @@ public class FunctionUtils {
     } else if (ret instanceof CharSequence || ret instanceof Character) {
       return new AviatorString(ret.toString());
     } else if (ret instanceof Boolean) {
-      return AviatorBoolean.valueOf((boolean) ret);
+      return AviatorBoolean.valueOf(((Boolean) ret).booleanValue());
     } else if (ret instanceof AviatorObject) {
       return (AviatorObject) ret;
     } else {

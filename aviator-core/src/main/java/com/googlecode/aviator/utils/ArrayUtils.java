@@ -67,17 +67,17 @@ public class ArrayUtils {
 
   public static void set(final Object a, final int index, final Object val) {
     if (a instanceof byte[]) {
-      ((byte[]) a)[index] = (byte) val;
+      ((byte[]) a)[index] = ((Number) val).byteValue();
     } else if (a instanceof short[]) {
-      ((short[]) a)[index] = (short) val;
+      ((short[]) a)[index] = ((Number) val).shortValue();
     } else if (a instanceof int[]) {
-      ((int[]) a)[index] = (int) val;
+      ((int[]) a)[index] = ((Number) val).intValue();
     } else if (a instanceof long[]) {
-      ((long[]) a)[index] = (long) val;
+      ((long[]) a)[index] = ((Number) val).longValue();
     } else if (a instanceof float[]) {
-      ((float[]) a)[index] = (float) val;
+      ((float[]) a)[index] = ((Number) val).floatValue();
     } else if (a instanceof double[]) {
-      ((double[]) a)[index] = (double) val;
+      ((double[]) a)[index] = ((Number) val).doubleValue();
     } else if (a instanceof String[]) {
       ((String[]) a)[index] = (String) val;
     } else if (a instanceof BigDecimal[]) {

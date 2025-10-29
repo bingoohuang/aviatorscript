@@ -231,7 +231,7 @@ public class ArrayHashMap<K, V> extends AbstractMap<K, V>
 
   @Override
   public Set<Entry<K, V>> entrySet() {
-    Set<Entry<K, V>> entrySet = new HashSet<>();
+    Set<Entry<K, V>> entrySet = new HashSet<Entry<K, V>>();
     for (int i = 0; i < this.entries.length; i++) {
       final MapEntry<K, V> entry = this.entries[i];
       if (entry != null && !entry.deleted) {

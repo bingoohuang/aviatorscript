@@ -19,7 +19,7 @@ public class ListCollector implements Collector {
   }
 
   public ListCollector(final int size, final boolean returnArray) {
-    this.list = new ArrayList<>(size > 0 ? size : INIT_CAP);
+    this.list = new ArrayList<Object>(size > 0 ? size : INIT_CAP);
     this.returnArray = returnArray;
   }
 

@@ -113,4 +113,9 @@ public class LoadIR implements IR {
     return "load " + this.token.getLexeme() + "  [" + this.token.getType() + "]      ("
         + this.sourceFile + ":" + this.token.getLineNo() + ")";
   }
+
+  @Override
+  public boolean mayBeCost() {
+    return false;
+  }
 }

@@ -71,7 +71,7 @@ import com.googlecode.aviator.utils.Env;
 public class OptimizeCodeGenerator implements CodeGenerator {
   private final EvalCodeGenerator codeGen;
 
-  private final List<Token<?>> tokenList = new ArrayList<>();
+  private final List<Token<?>> tokenList = new ArrayList<Token<?>>();
 
   private LambdaGenerator lambdaGenerator;
 
@@ -274,7 +274,7 @@ public class OptimizeCodeGenerator implements CodeGenerator {
             token = new PatternToken(((Pattern) val).pattern(), operatorToken.getLineNo(),
                 operatorToken.getStartIndex());
           } else if (val instanceof Boolean) {
-            token = (boolean) val ? Variable.TRUE : Variable.FALSE;
+            token = ((Boolean) val).booleanValue() ? Variable.TRUE : Variable.FALSE;
           } else {
             throw new CompileExpressionErrorException("Invalid operand:" + operand.desc(null));
           }
@@ -364,7 +364,7 @@ public class OptimizeCodeGenerator implements CodeGenerator {
 
     Map<String, VariableMeta/* metadata */> variables = new LinkedHashMap<String, VariableMeta>();
     Map<String, Integer/* counter */> methods = new HashMap<String, Integer>();
-    Set<Token<?>> constants = new HashSet<>();
+    Set<Token<?>> constants = new HashSet<Token<?>>();
     for (Token<?> token : this.tokenList) {
       if (ExpressionParser.isConstant(token, this.instance)) {
         constants.add(token);
@@ -429,13 +429,14 @@ public class OptimizeCodeGenerator implements CodeGenerator {
     // Last token is a literal token,then return a LiteralExpression
     if (this.tokenList.size() <= 1) {
       if (this.tokenList.isEmpty()) {
-        exp = new LiteralExpression(this.instance, null, new ArrayList<>(variables.values()));
+        exp = new LiteralExpression(this.instance, null,
+            new ArrayList<VariableMeta>(variables.values()));
       } else {
         final Token<?> lastToken = this.tokenList.get(0);
         if (ExpressionParser.isLiteralToken(lastToken, this.instance)) {
           exp = new LiteralExpression(this.instance,
               getAviatorObjectFromToken(lastToken).getValue(getCompileEnv()),
-              new ArrayList<>(variables.values()));
+              new ArrayList<VariableMeta>(variables.values()));
         }
       }
     }

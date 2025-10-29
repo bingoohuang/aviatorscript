@@ -32,9 +32,9 @@ public class SymbolTable implements Serializable {
 
   private static final long serialVersionUID = -9019014977807517193L;
 
-  private final Map<String, Variable> table = new HashMap<>();
+  private final Map<String, Variable> table = new HashMap<String, Variable>();
 
-  private static final Map<String, Variable> RESERVED = new HashMap<>();
+  private static final Map<String, Variable> RESERVED = new HashMap<String, Variable>();
 
   private static void reserveKeyword(final Variable v) {
     RESERVED.put(v.getLexeme(), v);

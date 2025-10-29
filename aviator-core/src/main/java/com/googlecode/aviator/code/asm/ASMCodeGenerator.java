@@ -129,7 +129,7 @@ public class ASMCodeGenerator extends BaseEvalCodeGenerator {
       Collections.emptyMap();
 
   private final Map<Label, Map<String/* inner name */, Integer/* local index */>> labelNameIndexMap =
-      new IdentityHashMap<>();
+      new IdentityHashMap<Label, Map<String, Integer>>();
   private static final Label START_LABEL = new Label();
 
   private Label currentLabel = START_LABEL;
@@ -732,7 +732,7 @@ public class ASMCodeGenerator extends BaseEvalCodeGenerator {
       ExpressionAccessor.setLambdaBootstraps(exp, this.lambdaBootstraps);
       ExpressionAccessor.setFuncsArgs(exp, this.funcsArgs);
       ExpressionAccessor.setSourceFile(exp, this.sourceFile);
-      ExpressionAccessor.setFunctionNames(exp, new ArrayList<>(this.methodTokens.keySet()));
+      ExpressionAccessor.setFunctionNames(exp, new ArrayList<String>(this.methodTokens.keySet()));
       if (enableSerializable) {
         exp.setClassBytes(bytes);
       }
@@ -972,7 +972,7 @@ public class ASMCodeGenerator extends BaseEvalCodeGenerator {
                 int localIndex = getLocalIndex();
                 this.mv.visitVarInsn(ASTORE, localIndex);
                 if (name2Index == null) {
-                  name2Index = new HashMap<>();
+                  name2Index = new HashMap<String, Integer>();
                   this.labelNameIndexMap.put(this.currentLabel, name2Index);
                 }
                 name2Index.put(innerVarName, localIndex);
@@ -1013,7 +1013,7 @@ public class ASMCodeGenerator extends BaseEvalCodeGenerator {
   @Override
   public void initVariables(final Map<String, VariableMeta/* counter */> vars) {
     this.variables = vars;
-    this.innerVars = new HashMap<>(this.variables.size());
+    this.innerVars = new HashMap<String, String>(this.variables.size());
     for (String outterVarName : this.variables.keySet()) {
       if (outterVarName.equals(Constants.REDUCER_EMPTY_VAR)) {
         continue;
@@ -1037,7 +1037,7 @@ public class ASMCodeGenerator extends BaseEvalCodeGenerator {
     if (constants.isEmpty()) {
       return;
     }
-    this.constantPool = new HashMap<>(constants.size());
+    this.constantPool = new HashMap<Token<?>, String>(constants.size());
 
     for (Token<?> token : constants) {
       String fieldName = getInnerName(token.getLexeme());
@@ -1049,7 +1049,7 @@ public class ASMCodeGenerator extends BaseEvalCodeGenerator {
   @Override
   public void initMethods(final Map<String, Integer/* counter */> methods) {
     super.initMethods(methods);
-    this.innerMethodMap = new HashMap<>(methods.size());
+    this.innerMethodMap = new HashMap<String, String>(methods.size());
     for (String outterMethodName : methods.keySet()) {
       // Use inner method name instead of outter method name
       String innerMethodName = getInnerName(outterMethodName);

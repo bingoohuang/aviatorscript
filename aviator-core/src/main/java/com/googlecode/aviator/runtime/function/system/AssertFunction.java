@@ -57,7 +57,7 @@ public class AssertFunction extends AbstractFunction {
 
   @Override
   public AviatorObject call(final Map<String, Object> env, final AviatorObject arg1) {
-    boolean result = (boolean) arg1.getValue(env);
+    boolean result = ((Boolean) arg1.getValue(env)).booleanValue();
     if (!result) {
       throw new AssertFailed();
     }
@@ -67,7 +67,7 @@ public class AssertFunction extends AbstractFunction {
   @Override
   public AviatorObject call(final Map<String, Object> env, final AviatorObject arg1,
       final AviatorObject arg2) {
-    boolean result = (boolean) arg1.getValue(env);
+    boolean result = ((Boolean) arg1.getValue(env)).booleanValue();
     if (!result) {
       throw new AssertFailed(FunctionUtils.getStringValue(arg2, env));
     }

@@ -32,7 +32,7 @@ public abstract class BaseEvalCodeGenerator implements EvalCodeGenerator {
    * Compiled lambda functions.
    */
   protected Map<String, LambdaFunctionBootstrap> lambdaBootstraps;
-  protected final ArrayDeque<MethodMetaData> methodMetaDataStack = new ArrayDeque<>();
+  protected final ArrayDeque<MethodMetaData> methodMetaDataStack = new ArrayDeque<MethodMetaData>();
   /**
    * function params info.
    */
@@ -47,7 +47,7 @@ public abstract class BaseEvalCodeGenerator implements EvalCodeGenerator {
 
   protected Map<Integer/* internal function id */, List<FunctionArgument>> getFuncsArgs() {
     if (this.funcsArgs == null) {
-      this.funcsArgs = new HashMap<>();
+      this.funcsArgs = new HashMap<Integer, List<FunctionArgument>>();
     }
     return this.funcsArgs;
   }

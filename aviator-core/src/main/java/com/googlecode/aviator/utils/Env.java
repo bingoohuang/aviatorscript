@@ -146,7 +146,7 @@ public class Env implements Map<String, Object>, Serializable {
 
   public String addSymbol(final String sym) {
     if (this.importedSymbols == null) {
-      this.importedSymbols = new ArrayList<>();
+      this.importedSymbols = new ArrayList<String>();
     }
     this.importedSymbols.add(sym);
     invalidateCache();
@@ -155,7 +155,7 @@ public class Env implements Map<String, Object>, Serializable {
 
   public String addPackageSymbol(final String sym) {
     if (this.importedPackages == null) {
-      this.importedPackages = new ArrayList<>();
+      this.importedPackages = new ArrayList<String>();
     }
     this.importedPackages.add(sym);
     invalidateCache();
@@ -269,7 +269,7 @@ public class Env implements Map<String, Object>, Serializable {
 
   private void put2cache(final String name, final Class<?> ret) {
     if (this.resolvedClasses == null) {
-      this.resolvedClasses = new HashMap<>();
+      this.resolvedClasses = new HashMap<String, Class<?>>();
     }
     this.resolvedClasses.put(name, ret);
   }
@@ -599,7 +599,7 @@ public class Env implements Map<String, Object>, Serializable {
       if (readOnly) {
         return EMPTY_ENV;
       }
-      this.mOverrides = new ArrayHashMap<>();
+      this.mOverrides = new ArrayHashMap<String, Object>();
       // this.mOverrides = new HashMap<>();
     }
     return this.mOverrides;

@@ -91,9 +91,9 @@ public abstract class BaseExpression implements Expression {
         populateFullNames();
       }
 
-      List<String> newVarNames = new ArrayList<>(this.varFullNames.size());
-      Set<String> nameSet = new HashSet<>();
-      Set<String> parentInitNames = new HashSet<>();
+      List<String> newVarNames = new ArrayList<String>(this.varFullNames.size());
+      Set<String> nameSet = new HashSet<String>();
+      Set<String> parentInitNames = new HashSet<String>();
 
       for (VariableMeta m : this.vars) {
         if (m.isInit() && !m.getName().contains(".") && m.getFirstIndex() >= 0) {
@@ -141,7 +141,7 @@ public abstract class BaseExpression implements Expression {
     if (this.varFullNames == null) {
       Map<String, VariableMeta> fullNames = getFullNameMetas();
 
-      final ArrayList<VariableMeta> metas = new ArrayList<>(fullNames.values());
+      final ArrayList<VariableMeta> metas = new ArrayList<VariableMeta>(fullNames.values());
       Collections.sort(metas, new Comparator<VariableMeta>() {
 
         @Override
@@ -151,7 +151,7 @@ public abstract class BaseExpression implements Expression {
 
       });
 
-      List<String> newFullNames = new ArrayList<>(fullNames.size());
+      List<String> newFullNames = new ArrayList<String>(fullNames.size());
       for (VariableMeta meta : metas) {
         newFullNames.add(meta.getName());
       }
@@ -161,9 +161,9 @@ public abstract class BaseExpression implements Expression {
   }
 
   public Map<String, VariableMeta> getFullNameMetas() {
-    Map<String, VariableMeta> fullNames = new LinkedHashMap<>(this.vars.size());
-    Set<String> parentVars = new HashSet<>(this.vars.size());
-    Set<String> definedVars = new HashSet<>();
+    Map<String, VariableMeta> fullNames = new LinkedHashMap<String, VariableMeta>(this.vars.size());
+    Set<String> parentVars = new HashSet<String>(this.vars.size());
+    Set<String> definedVars = new HashSet<String>();
 
     for (VariableMeta m : this.vars) {
       final String name = m.getName();
@@ -186,7 +186,7 @@ public abstract class BaseExpression implements Expression {
   public StringSegments getStringSegements(final String lexeme, final int lineNo) {
     FutureTask<StringSegments> task = this.stringSegs.get(lexeme);
     if (task == null) {
-      task = new FutureTask<>(new Callable<StringSegments>() {
+      task = new FutureTask<StringSegments>(new Callable<StringSegments>() {
         @Override
         public StringSegments call() throws Exception {
           final StringSegments compiledSegs = BaseExpression.this.instance
@@ -419,7 +419,7 @@ public abstract class BaseExpression implements Expression {
       // Remove runtime defined functions.
       validNames.removeAll(definedFuncs);
 
-      this.filteredFunctionNames = new ArrayList<>(validNames);
+      this.filteredFunctionNames = new ArrayList<String>(validNames);
     }
   }
 

@@ -60,7 +60,7 @@ public abstract class AbstractToken<T> implements Token<T> {
   @Override
   public Token<T> withMeta(final String name, final Object v) {
     if (this.metaMap == null) {
-      this.metaMap = new IdentityHashMap<>();
+      this.metaMap = new IdentityHashMap<String, Object>();
     }
     this.metaMap.put(name, v);
     return this;

@@ -30,7 +30,7 @@ public class SeqNewMapFunction extends AbstractVariadicFunction {
       throw new IllegalArgumentException("Expect arguments in even number as key/value pairs.");
     }
 
-    Map<Object, Object> map = new HashMap<>(args != null ? args.length / 2 : 10);
+    Map<Object, Object> map = new HashMap<Object, Object>(args != null ? args.length / 2 : 10);
     if (args != null) {
       for (int i = 0; i < args.length;) {
         map.put(args[i].getValue(env), args[i + 1].getValue(env));

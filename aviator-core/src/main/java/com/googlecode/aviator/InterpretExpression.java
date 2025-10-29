@@ -35,7 +35,8 @@ public class InterpretExpression extends BaseExpression {
   private Map<VariableMeta, AviatorJavaType> variables =
       new IdentityHashMap<VariableMeta, AviatorJavaType>();
 
-  private Map<Token<?>, AviatorObject> constantPool = new IdentityHashMap<>();
+  private Map<Token<?>, AviatorObject> constantPool =
+      new IdentityHashMap<Token<?>, AviatorObject>();
 
 
   public InterpretExpression(final AviatorEvaluatorInstance instance, final List<VariableMeta> vars,
@@ -88,7 +89,7 @@ public class InterpretExpression extends BaseExpression {
 
     if (this.lambdaBootstraps != null) {
       final List<LambdaFunctionBootstrap> bootstraps =
-          new ArrayList<>(this.lambdaBootstraps.values());
+          new ArrayList<LambdaFunctionBootstrap>(this.lambdaBootstraps.values());
       Collections.sort(bootstraps);
       for (LambdaFunctionBootstrap bootstrap : bootstraps) {
         final Expression exp = bootstrap.getExpression();

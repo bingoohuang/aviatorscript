@@ -102,7 +102,7 @@ public final class Range extends AviatorObject implements Sequence<Number> {
   public Collector newCollector(final int size) {
     if (size <= 0) {
       return new Collector() {
-        List<Object> list = new ArrayList<>();
+        List<Object> list = new ArrayList<Object>();
 
         @Override
         public void add(final Object e) {
